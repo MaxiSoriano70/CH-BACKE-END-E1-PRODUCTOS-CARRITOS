@@ -23,6 +23,11 @@ carritosRouter.post("/:id/producto/:pid", (req, res) => {
     const idCarrito = parseInt(req.params.id);
     const idProducto = parseInt(req.params.pid);
     const cantidad = req.body.cantidad;
+
+    if (isNaN(cantidad) || cantidad <= 0) {
+        return res.status(400).send({ message: "Cantidad no válida." });
+    }
+
     const carrito = manager.agregarProductoAlCarrito(idCarrito, idProducto , cantidad);
 
     if (carrito.error) {
